@@ -1,0 +1,522 @@
+{
+  "configuration" : { },
+  "description" : "Description",
+  "documentation" : { },
+  "id" : 1,
+  "lastModifiedDate" : "2024-11-04T13:58:40Z",
+  "model" : {
+    "people" : [ {
+      "description" : "A patient who enters blood pressure measurements",
+      "id" : "1",
+      "location" : "Unspecified",
+      "name" : "Patient",
+      "properties" : {
+        "structurizr.dsl.identifier" : "patient"
+      },
+      "relationships" : [ {
+        "description" : "Enters data",
+        "destinationId" : "5",
+        "id" : "27",
+        "properties" : {
+          "structurizr.dsl.identifier" : "1a669fd3-e904-4d2d-aa8a-e6883ca25247"
+        },
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Enters data",
+        "destinationId" : "3",
+        "id" : "28",
+        "linkedRelationshipId" : "27",
+        "sourceId" : "1"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "description" : "Monitors the blood pressure measured by his patients",
+      "id" : "2",
+      "location" : "Unspecified",
+      "name" : "Doctor",
+      "properties" : {
+        "structurizr.dsl.identifier" : "doctor"
+      },
+      "relationships" : [ {
+        "description" : "Works with data",
+        "destinationId" : "12",
+        "id" : "29",
+        "properties" : {
+          "structurizr.dsl.identifier" : "aba43683-a35a-4845-81f9-85bc9c5783d1"
+        },
+        "sourceId" : "2",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Works with data",
+        "destinationId" : "3",
+        "id" : "30",
+        "linkedRelationshipId" : "29",
+        "sourceId" : "2"
+      } ],
+      "tags" : "Element,Person"
+    } ],
+    "softwareSystems" : [ {
+      "containers" : [ {
+        "documentation" : {
+          "images" : [ {
+            "content" : "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",
+            "name" : "Schema.png",
+            "type" : "image/png"
+          } ],
+          "sections" : [ {
+            "content" : "## Database schema\nThe database design is going to be as follows. One table will contain all patients with their SSN-number as the key, and the other table, named Measurements, will have an incremental id number. One patient can have 0 to many measurements, and one measurement will belong to one, and only one, patient,\n\n![](Schema.png)",
+            "filename" : "Introduction.md",
+            "format" : "Markdown",
+            "order" : 1,
+            "title" : ""
+          } ]
+        },
+        "id" : "4",
+        "name" : "Database",
+        "properties" : {
+          "structurizr.dsl.identifier" : "db"
+        },
+        "tags" : "Element,Container,Database",
+        "technology" : "MySQL"
+      }, {
+        "description" : "App for patient to enter details about their latest blood pressure measurement",
+        "documentation" : { },
+        "id" : "5",
+        "name" : "Patient App",
+        "properties" : {
+          "structurizr.dsl.identifier" : "patientapp"
+        },
+        "relationships" : [ {
+          "description" : "GET",
+          "destinationId" : "7",
+          "id" : "9",
+          "properties" : {
+            "structurizr.dsl.identifier" : "1769a96c-ac8f-4440-aecc-e09fb66ac70d"
+          },
+          "sourceId" : "5",
+          "tags" : "Relationship"
+        }, {
+          "description" : "GET",
+          "destinationId" : "6",
+          "id" : "10",
+          "linkedRelationshipId" : "9",
+          "sourceId" : "5"
+        }, {
+          "description" : "POST",
+          "destinationId" : "14",
+          "id" : "21",
+          "properties" : {
+            "structurizr.dsl.identifier" : "555acdc9-9e0f-4a05-9c1c-866e2e935381"
+          },
+          "sourceId" : "5",
+          "tags" : "Relationship"
+        }, {
+          "description" : "POST",
+          "destinationId" : "13",
+          "id" : "22",
+          "linkedRelationshipId" : "21",
+          "sourceId" : "5"
+        } ],
+        "tags" : "Element,Container,App",
+        "technology" : "iOS/Android"
+      }, {
+        "components" : [ {
+          "documentation" : { },
+          "id" : "7",
+          "name" : "Patient Controller",
+          "properties" : {
+            "structurizr.dsl.identifier" : "patientcontroller"
+          },
+          "relationships" : [ {
+            "description" : "Uses",
+            "destinationId" : "8",
+            "id" : "23",
+            "properties" : {
+              "structurizr.dsl.identifier" : "37412e31-b293-4ae5-8c4f-8efb65dbe78a"
+            },
+            "sourceId" : "7",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "documentation" : { },
+          "id" : "8",
+          "name" : "Patient Repository",
+          "properties" : {
+            "structurizr.dsl.identifier" : "patientrepository"
+          },
+          "relationships" : [ {
+            "description" : "Uses",
+            "destinationId" : "4",
+            "id" : "24",
+            "properties" : {
+              "structurizr.dsl.identifier" : "c92e7ecd-dca9-42f9-947b-419ac440fdba"
+            },
+            "sourceId" : "8",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        } ],
+        "documentation" : {
+          "images" : [ {
+            "content" : "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",
+            "name" : "DataModel.png",
+            "type" : "image/png"
+          } ],
+          "sections" : [ {
+            "content" : "## Data model\nThe data model used by this service is illustrated below.\n\n![](DataModel.png)",
+            "filename" : "Introduction.md",
+            "format" : "Markdown",
+            "order" : 1,
+            "title" : ""
+          } ]
+        },
+        "id" : "6",
+        "name" : "Patient Service",
+        "properties" : {
+          "structurizr.dsl.identifier" : "patientservice"
+        },
+        "relationships" : [ {
+          "description" : "Uses",
+          "destinationId" : "4",
+          "id" : "11",
+          "properties" : {
+            "structurizr.dsl.identifier" : "c440e152-e238-485c-b026-bf3b3dc75ab2"
+          },
+          "sourceId" : "6",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "REST"
+      }, {
+        "documentation" : { },
+        "id" : "12",
+        "name" : "Doctor UI",
+        "properties" : {
+          "structurizr.dsl.identifier" : "doctorui"
+        },
+        "relationships" : [ {
+          "description" : "GET/DELETE/PUT",
+          "destinationId" : "14",
+          "id" : "16",
+          "properties" : {
+            "structurizr.dsl.identifier" : "256ee529-5d41-4048-9e32-b00077279530"
+          },
+          "sourceId" : "12",
+          "tags" : "Relationship,REST"
+        }, {
+          "description" : "GET/DELETE/PUT",
+          "destinationId" : "13",
+          "id" : "17",
+          "linkedRelationshipId" : "16",
+          "sourceId" : "12"
+        }, {
+          "description" : "POST",
+          "destinationId" : "7",
+          "id" : "18",
+          "properties" : {
+            "structurizr.dsl.identifier" : "bdac4c72-8817-47d7-a7d3-b35c8b9f2cd4"
+          },
+          "sourceId" : "12",
+          "tags" : "Relationship,REST"
+        }, {
+          "description" : "POST",
+          "destinationId" : "6",
+          "id" : "19",
+          "linkedRelationshipId" : "18",
+          "sourceId" : "12"
+        } ],
+        "tags" : "Element,Container,WebBrowser",
+        "technology" : "HTML/JS"
+      }, {
+        "components" : [ {
+          "documentation" : { },
+          "id" : "14",
+          "name" : "Measurement Controller",
+          "properties" : {
+            "structurizr.dsl.identifier" : "measurementcontroller"
+          },
+          "relationships" : [ {
+            "description" : "Uses",
+            "destinationId" : "15",
+            "id" : "25",
+            "properties" : {
+              "structurizr.dsl.identifier" : "6ea95aef-6672-4c6e-a9b8-9565af928744"
+            },
+            "sourceId" : "14",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "documentation" : { },
+          "id" : "15",
+          "name" : "Measurement Repository",
+          "properties" : {
+            "structurizr.dsl.identifier" : "measurementrepository"
+          },
+          "relationships" : [ {
+            "description" : "Uses",
+            "destinationId" : "4",
+            "id" : "26",
+            "properties" : {
+              "structurizr.dsl.identifier" : "cf93e4b9-54cc-4e01-b831-4228c871a385"
+            },
+            "sourceId" : "15",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component"
+        } ],
+        "documentation" : { },
+        "id" : "13",
+        "name" : "Measurement Service",
+        "properties" : {
+          "structurizr.dsl.identifier" : "measurementservice"
+        },
+        "relationships" : [ {
+          "description" : "Uses",
+          "destinationId" : "4",
+          "id" : "20",
+          "properties" : {
+            "structurizr.dsl.identifier" : "ee47ad2c-3dd1-4cf8-8d48-038060537b67"
+          },
+          "sourceId" : "13",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "REST"
+      } ],
+      "description" : "A system to collect blood pressure measurements by patients to be analysed by the patients doctor.",
+      "documentation" : { },
+      "id" : "3",
+      "location" : "Unspecified",
+      "name" : "Blood Pressure System",
+      "properties" : {
+        "structurizr.dsl.identifier" : "bps"
+      },
+      "tags" : "Element,Software System"
+    } ]
+  },
+  "name" : "Name",
+  "properties" : {
+    "structurizr.dsl" : "d29ya3NwYWNlIHsKICAgIG1vZGVsIHsKICAgICAgICBwYXRpZW50ID0gcGVyc29uICJQYXRpZW50IiAiQSBwYXRpZW50IHdobyBlbnRlcnMgYmxvb2QgcHJlc3N1cmUgbWVhc3VyZW1lbnRzIgogICAgICAgIGRvY3RvciA9IHBlcnNvbiAiRG9jdG9yIiAiTW9uaXRvcnMgdGhlIGJsb29kIHByZXNzdXJlIG1lYXN1cmVkIGJ5IGhpcyBwYXRpZW50cyIKICAgICAgICAKICAgICAgICBicHMgPSBzb2Z0d2FyZVN5c3RlbSAiQmxvb2QgUHJlc3N1cmUgU3lzdGVtIiAiQSBzeXN0ZW0gdG8gY29sbGVjdCBibG9vZCBwcmVzc3VyZSBtZWFzdXJlbWVudHMgYnkgcGF0aWVudHMgdG8gYmUgYW5hbHlzZWQgYnkgdGhlIHBhdGllbnRzIGRvY3Rvci4iIHsKCiAgICAgICAgICAgIGRiID0gY29udGFpbmVyICJEYXRhYmFzZSIgewogICAgICAgICAgICAgICAgIWRvY3MgRGF0YWJhc2UKICAgICAgICAgICAgICAgIHRhZ3MgIkRhdGFiYXNlIgogICAgICAgICAgICAgICAgdGVjaG5vbG9neSAiTXlTUUwiCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIHBhdGllbnRBcHAgPSBjb250YWluZXIgIlBhdGllbnQgQXBwIiAiQXBwIGZvciBwYXRpZW50IHRvIGVudGVyIGRldGFpbHMgYWJvdXQgdGhlaXIgbGF0ZXN0IGJsb29kIHByZXNzdXJlIG1lYXN1cmVtZW50IiB7CiAgICAgICAgICAgICAgICB0YWdzICJBcHAiCiAgICAgICAgICAgICAgICB0ZWNobm9sb2d5ICJpT1MvQW5kcm9pZCIKICAgICAgICAgICAgfQogICAgICAgICAgICBwYXRpZW50U2VydmljZSA9IGNvbnRhaW5lciAiUGF0aWVudCBTZXJ2aWNlIiB7CiAgICAgICAgICAgICAgICAhZG9jcyBQYXRpZW50U2VydmljZQogICAgICAgICAgICAgICAgdGVjaG5vbG9neSAiUkVTVCIKICAgICAgICAgICAgICAgIHBhdGllbnRDb250cm9sbGVyID0gY29tcG9uZW50ICJQYXRpZW50IENvbnRyb2xsZXIiCiAgICAgICAgICAgICAgICBwYXRpZW50UmVwb3NpdG9yeSA9IGNvbXBvbmVudCAiUGF0aWVudCBSZXBvc2l0b3J5IgogICAgICAgICAgICB9CiAgICAgICAgICAgIAogICAgICAgICAgICBwYXRpZW50QXBwIC0+IHBhdGllbnRDb250cm9sbGVyICJHRVQiCiAgICAgICAgICAgIHBhdGllbnRTZXJ2aWNlIC0+IGRiICJVc2VzIgogICAgICAgICAgICAKICAgICAgICAgICAgCiAgICAgICAgICAgIGRvY3RvclVJID0gY29udGFpbmVyICJEb2N0b3IgVUkiIHsKICAgICAgICAgICAgICAgIHRhZ3MgIldlYkJyb3dzZXIiCiAgICAgICAgICAgICAgICB0ZWNobm9sb2d5ICJIVE1ML0pTIgogICAgICAgICAgICB9CiAgICAgICAgICAgIG1lYXN1cmVtZW50U2VydmljZSA9IGNvbnRhaW5lciAiTWVhc3VyZW1lbnQgU2VydmljZSIgewogICAgICAgICAgICAgICAgdGVjaG5vbG9neSAiUkVTVCIKICAgICAgICAgICAgICAgIG1lYXN1cmVtZW50Q29udHJvbGxlciA9IGNvbXBvbmVudCAiTWVhc3VyZW1lbnQgQ29udHJvbGxlciIKICAgICAgICAgICAgICAgIG1lYXN1cmVtZW50UmVwb3NpdG9yeSA9IGNvbXBvbmVudCAiTWVhc3VyZW1lbnQgUmVwb3NpdG9yeSIKICAgICAgICAgICAgfQogICAgICAgICAgICAKICAgICAgICAgICAgZG9jdG9yVUkgLT4gbWVhc3VyZW1lbnRDb250cm9sbGVyICJHRVQvREVMRVRFL1BVVCIgewogICAgICAgICAgICAgICAgdGFncyAiUkVTVCIKICAgICAgICAgICAgfQogICAgICAgICAgICBkb2N0b3JVSSAtPiBwYXRpZW50Q29udHJvbGxlciAiUE9TVCIgewogICAgICAgICAgICAgICAgdGFncyAiUkVTVCIKICAgICAgICAgICAgfQogICAgICAgICAgICBtZWFzdXJlbWVudFNlcnZpY2UgLT4gZGIgIlVzZXMiCiAgICAgICAgICAgIHBhdGllbnRBcHAgLT4gbWVhc3VyZW1lbnRDb250cm9sbGVyICJQT1NUIgoKICAgICAgICAgICAgcGF0aWVudENvbnRyb2xsZXIgLT4gcGF0aWVudFJlcG9zaXRvcnkgIlVzZXMiCiAgICAgICAgICAgIHBhdGllbnRSZXBvc2l0b3J5IC0+IGRiICJVc2VzIgoKICAgICAgICAgICAgbWVhc3VyZW1lbnRDb250cm9sbGVyIC0+IG1lYXN1cmVtZW50UmVwb3NpdG9yeSAiVXNlcyIKICAgICAgICAgICAgbWVhc3VyZW1lbnRSZXBvc2l0b3J5IC0+IGRiICJVc2VzIgogICAgICAgIH0KICAgICAgICAKICAgICAgICBwYXRpZW50IC0+IHBhdGllbnRBcHAgIkVudGVycyBkYXRhIgogICAgICAgIGRvY3RvciAtPiBkb2N0b3JVSSAiV29ya3Mgd2l0aCBkYXRhIgogICAgfQoKICAgIHZpZXdzIHsKICAgICAgICBzeXN0ZW1Db250ZXh0IGJwcyAiU3lzdGVtQ29udGV4dCIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b2xheW91dCBscgogICAgICAgIH0KICAgICAgICAKICAgICAgICBjb250YWluZXIgYnBzICJCbG9vZFByZXNzdXJlU3lzdGVtIiB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgICAgICBhdXRvbGF5b3V0IGxyCiAgICAgICAgfQoKICAgICAgICBjb21wb25lbnQgcGF0aWVudFNlcnZpY2UgIlBhdGllbnRTZXJ2aWNlIiB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgICAgICBhdXRvbGF5b3V0IGxyCiAgICAgICAgfQoKICAgICAgICBjb21wb25lbnQgbWVhc3VyZW1lbnRTZXJ2aWNlICJNZWFzdXJlbWVudFNlcnZpY2UiIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9sYXlvdXQgbHIKICAgICAgICB9CiAgICAgICAgCiAgICAgICAgc3R5bGVzIHsKICAgICAgICAgICAgZWxlbWVudCAiRWxlbWVudCIgewogICAgICAgICAgICAgICAgY29sb3IgI2ZmZmZmZgogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIlBlcnNvbiIgewogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjOWIxOTFmCiAgICAgICAgICAgICAgICBzaGFwZSBwZXJzb24KICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJTb2Z0d2FyZSBTeXN0ZW0iIHsKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgI2JhMWUyNQogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIkFwcCIgewogICAgICAgICAgICAgICAgc2hhcGUgIk1vYmlsZURldmljZUxhbmRzY2FwZSIKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJEYXRhYmFzZSIgewogICAgICAgICAgICAgICAgc2hhcGUgY3lsaW5kZXIKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJDb250YWluZXIiIHsKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgI2Q5MjMyYgogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIkNvbXBvbmVudCIgewogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjRTY2QzVBCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAiV2ViQnJvd3NlciIgewogICAgICAgICAgICAgICAgc2hhcGUgV2ViQnJvd3NlcgogICAgICAgICAgICB9CiAgICAgICAgfQogICAgfQp9"
+  },
+  "views" : {
+    "componentViews" : [ {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "containerId" : "6",
+      "elements" : [ {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "12",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "key" : "PatientService",
+      "order" : 3,
+      "relationships" : [ {
+        "id" : "18"
+      }, {
+        "id" : "23"
+      }, {
+        "id" : "24"
+      }, {
+        "id" : "9"
+      } ]
+    }, {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "containerId" : "13",
+      "elements" : [ {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "12",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "14",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "15",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "key" : "MeasurementService",
+      "order" : 4,
+      "relationships" : [ {
+        "id" : "16"
+      }, {
+        "id" : "21"
+      }, {
+        "id" : "25"
+      }, {
+        "id" : "26"
+      } ]
+    } ],
+    "configuration" : {
+      "branding" : { },
+      "lastSavedView" : "BloodPressureSystem",
+      "styles" : {
+        "elements" : [ {
+          "color" : "#ffffff",
+          "tag" : "Element"
+        }, {
+          "background" : "#9b191f",
+          "shape" : "Person",
+          "tag" : "Person"
+        }, {
+          "background" : "#ba1e25",
+          "tag" : "Software System"
+        }, {
+          "shape" : "MobileDeviceLandscape",
+          "tag" : "App"
+        }, {
+          "shape" : "Cylinder",
+          "tag" : "Database"
+        }, {
+          "background" : "#d9232b",
+          "tag" : "Container"
+        }, {
+          "background" : "#e66c5a",
+          "tag" : "Component"
+        }, {
+          "shape" : "WebBrowser",
+          "tag" : "WebBrowser"
+        } ]
+      },
+      "terminology" : { }
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "12",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "13",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "BloodPressureSystem",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "10"
+      }, {
+        "id" : "11"
+      }, {
+        "id" : "17"
+      }, {
+        "id" : "19"
+      }, {
+        "id" : "20"
+      }, {
+        "id" : "22"
+      }, {
+        "id" : "27"
+      }, {
+        "id" : "29"
+      } ],
+      "softwareSystemId" : "3"
+    } ],
+    "systemContextViews" : [ {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "key" : "SystemContext",
+      "order" : 1,
+      "relationships" : [ {
+        "id" : "28"
+      }, {
+        "id" : "30"
+      } ],
+      "softwareSystemId" : "3"
+    } ]
+  }
+}
