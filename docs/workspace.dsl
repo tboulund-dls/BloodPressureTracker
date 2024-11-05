@@ -1,6 +1,6 @@
 workspace {
     model {
-        patient = person "Patient" "A patient who enters blood pressure measurements"
+        patient = person "Patientaaaa" "A patient who enters blood pressure measurements"
         doctor = person "Doctor" "Monitors the blood pressure measured by his patients"
         
         bps = softwareSystem "Blood Pressure System" "A system to collect blood pressure measurements by patients to be analysed by the patients doctor." {
