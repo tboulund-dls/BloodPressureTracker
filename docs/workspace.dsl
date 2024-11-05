@@ -5,35 +5,37 @@ workspace {
         
         bps = softwareSystem "Blood Pressure System" "A system to collect blood pressure measurements by patients to be analysed by the patients doctor." {
 
-            db = container "Database" {
+            db = container "Database" "Stores patient and measurement data" {
                 !docs Database
                 tags "Database"
                 technology "MySQL"
             }
 
             patientApp = container "Patient App" "App for patient to enter details about their latest blood pressure measurement" {
+                !docs PatientApp
                 tags "App"
                 technology "iOS/Android"
             }
-            patientService = container "Patient Service" {
+            patientService = container "Patient Service" "Responsible for handling data related to the patients" {
                 !docs PatientService
                 technology "REST"
-                patientController = component "Patient Controller"
-                patientRepository = component "Patient Repository"
+                patientController = component "Patient Controller" "Responsible for getting requests related to fetching or storing new patient data"
+                patientRepository = component "Patient Repository" "Responsible for storing and retrieving patient data"
             }
             
             patientApp -> patientController "GET"
             patientService -> db "Uses"
             
-            
-            doctorUI = container "Doctor UI" {
+            doctorUI = container "Doctor UI" "Web interface for doctor to view and manage blood pressure measurements" {
+                !docs DoctorUI
                 tags "WebBrowser"
                 technology "HTML/JS"
             }
-            measurementService = container "Measurement Service" {
+            measurementService = container "Measurement Service" "Responsible for handling data related to the blood pressure measurements" {
+                !docs MeasurementService
                 technology "REST"
-                measurementController = component "Measurement Controller"
-                measurementRepository = component "Measurement Repository"
+                measurementController = component "Measurement Controller" "Responsible for getting requests related to fetching or storing new and updated measurement data"
+                measurementRepository = component "Measurement Repository" "Responsible for storing and retrieving measurement data"
             }
             
             doctorUI -> measurementController "GET/DELETE/PUT" {
