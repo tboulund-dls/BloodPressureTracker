@@ -1,7 +1,69 @@
 services:
   structurizr:
+    container_name: "structurizr"
     image: structurizr/lite
     ports:
       - "8080:8080"
     volumes:
       - ./docs:/usr/local/structurizr
+    networks:
+      - blood-pressure-tracker-network
+
+  featurehub:
+    image: featurehub/party-server:latest
+    restart: always
+    volumes:
+      - featurehub-h2-data:/db
+    ports:
+      - "8085:8085"
+    networks:
+      - blood-pressure-tracker-network
+
+  patient-service:
+    container_name: "patient-service"
+    build: 
+      context: .
+      dockerfile: Patient Service/Dockerfile
+    ports:
+      - "5001:80"
+    depends_on:
+      - featurehub
+      - mysql-server
+    networks:
+      - blood-pressure-tracker-network
+
+  measurement-service:
+    container_name: "measurement-service"
+    build: 
+      context: .
+      dockerfile: Measurement Service/Dockerfile
+    ports:
+      - "5002:80"
+    depends_on:
+      - featurehub
+      - mysql-server
+    networks:
+      - blood-pressure-tracker-network
+
+  mysql-server:
+    container_name: "mysql-server"
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: MyStrong!Passw0rd
+      MYSQL_DATABASE: BloodPressureTrackerDb
+    ports:
+      - "3306:3306"
+    depends_on:
+      - featurehub
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - blood-pressure-tracker-network
+
+volumes:
+  mysql-data:
+  featurehub-h2-data:
+
+networks:
+  blood-pressure-tracker-network:
+    driver: bridge

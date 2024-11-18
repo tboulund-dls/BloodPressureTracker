@@ -1,0 +1,103 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: List files # To make sure the path for the .csproj files are correct
+      run: |
+        ls -R
+
+    - name: Set up .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '7.0' 
+
+    - name: Restore dependencies for Patient Service
+      run: dotnet restore "Patient Service/Patient Service.csproj"
+
+    - name: Restore dependencies for Measurement Service
+      run: dotnet restore "Measurement Service/Measurement Service.csproj"
+
+    - name: Build Patient Service
+      run: dotnet build "Patient Service/Patient Service.csproj" --no-restore
+
+    - name: Build Measurement Service
+      run: dotnet build "Measurement Service/Measurement Service.csproj" --no-restore
+
+# No tests
+
+  dockerize:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    # Build Docker image for Patient Service
+    - name: Build Docker image for Patient Service
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/patient-service:latest -f "Patient Service/Dockerfile" .
+
+    # Build Docker image for Measurement Service
+    - name: Build Docker image for Measurement Service
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/measurement-service:latest -f "Measurement Service/Dockerfile" .
+
+    # Push Patient Service Docker image
+    - name: Push Docker image for Patient Service
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/patient-service:latest
+
+    # Push Measurement Service Docker image
+    - name: Push Docker image for Measurement Service
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/measurement-service:latest
+
+  # deploy:
+  #   needs: dockerize
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Checkout repository
+  #     uses: actions/checkout@v3
+
+  #   - name: Set up Kubernetes
+  #     uses: azure/setup-kubectl@v3
+  #     with:
+  #       version: v1.30.2 # This should be version of Kubernetes running on the cluster (Server Version)
+
+  #   - name: Authenticate with Kubernetes cluster
+  #     env:
+  #       KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+  #     run: |
+  #       mkdir -p $HOME/.kube  # Create the .kube directory
+  #       echo "$KUBE_CONFIG_DATA" | base64 --decode > $HOME/.kube/config
+
+  #   - name: Deploy Patient Service to Kubernetes
+  #     run: |
+  #       kubectl apply -f "Patient Service/patient-service.k8s.yml" --validate=false
+
+  #   - name: Deploy Measurement Service to Kubernetes
+  #     run: |
+  #       kubectl apply -f "Measurement Service/measurement-service.k8s.yml" --validate=false
+
+  #   - name: Verify Deployment Status
+  #     run: |
+  #       kubectl rollout status deployment/patient-service # the name of the Kubernetes deployment resource, not the YAML file
+  #       kubectl rollout status deployment/measurement-service #  the name of the Kubernetes deployment resource, not the YAML file
