@@ -5,3 +5,62 @@ services:
       - "8080:8080"
     volumes:
       - ./docs:/usr/local/structurizr
+  database:
+    image: mysql:8.0.40-bookworm
+    ports:
+      - "3306:3306"
+    env_file:
+      - database.env
+    volumes:
+      - measurementsvolume:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    depends_on:
+      - seq
+  databaseservice:
+    build:
+      context: .
+      dockerfile: DatabaseService/Dockerfile
+    image: larsvegascph/databaseservice
+    depends_on:
+      database:
+        condition: service_healthy
+  patientservice:
+    build:
+      context: .
+      dockerfile: PatientService/Dockerfile
+    image: larsvegascph/patientservice
+    depends_on:
+      databaseservice:
+        condition: service_healthy
+  doctorservice:
+    build:
+      context: .
+      dockerfile: DoctorService/Dockerfile
+    image: larsvegascph/doctorservice
+    depends_on:
+      databaseservice:
+        condition: service_healthy
+  measureservice:
+    build:
+      context: .
+      dockerfile: MeasureService/Dockerfile
+    image: larsvegascph/measureservice
+    depends_on:
+      databaseservice:
+        condition: service_healthy
+  seq:
+    image: datalust/seq
+    ports:
+      - 5341:5341
+      - 5342:80
+    volumes:
+      - loggingvolume:/data
+    environment:
+      - ACCEPT_EULA=Y
+volumes:
+  measurementsvolume:
+  loggingvolume:
