@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug with GDB",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build_output/BloodPressureTracker",   // Path to the executable
+      "args": [],                                          // Arguments to pass to the program
+      "stopAtEntry": false,                                // Optional: Stop at the entry point
+      "cwd": "${workspaceFolder}",                         // Current working directory (optional)
+      "environment": [],                                   // Environment variables (optional)
+      "externalConsole": false,                            // Whether to use an external console
+      "MIMode": "gdb",                                     // Using GDB for debugging
+      "miDebuggerPath": "/usr/bin/gdb",                     // Path to GDB (adjust if necessary)
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for GDB",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+    }
+  ]
+}

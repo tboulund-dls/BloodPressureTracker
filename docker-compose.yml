@@ -1,7 +1,61 @@
 services:
-  structurizr:
-    image: structurizr/lite
+  global_db:
+    container_name: global_db
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: mydatabase
     ports:
-      - "8080:8080"
-    volumes:
-      - ./docs:/usr/local/structurizr
+      - "3307:3306"
+    networks:
+      - bms_net
+
+  region_db:
+    container_name: region_db
+    
+    build:
+      context: .
+      dockerfile: db/dockerfile
+    ports:
+      - "3306:3306"
+    networks:
+      - bms_net
+
+  web_app:
+    container_name: web_system
+    restart: always
+    build:
+      context: .
+      dockerfile: bms_app_web/dockerfile
+    ports:
+      - "5000:80"
+    depends_on:
+      - "service_app"
+    networks:
+      - bms_net
+    environment:
+      - SERVICE_SYSTEM_URL=service_app:20200
+    deploy:
+      replicas: 1
+
+  service_app:
+    container_name: service_system
+    restart: always
+    build:
+      context: .
+      dockerfile: src/dockerfile
+    depends_on:
+      - region_db
+    ports:
+      - "20200:20200"
+    networks:
+      - bms_net
+    deploy:
+      replicas: 1
+
+volumes:
+  db_data:
+
+networks:
+  bms_net:
+    driver: bridge

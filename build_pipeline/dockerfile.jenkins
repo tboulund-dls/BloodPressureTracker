@@ -1,0 +1,17 @@
+FROM jenkins/jenkins:lts
+
+USER root
+
+# Install necessary dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    g++ \
+    libmysqlcppconn-dev \
+    libpthread-stubs0-dev \
+    libboost-all-dev \
+    libstdc++6 \
+    clang \
+    && rm -rf /var/lib/apt/lists/*
+
+USER jenkins

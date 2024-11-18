@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/BloodPressureTracker.dir/doctorService.cpp.o CMakeFiles/BloodPressureTracker.dir/patientService.cpp.o CMakeFiles/BloodPressureTracker.dir/tcpSocket.cpp.o CMakeFiles/BloodPressureTracker.dir/main.cpp.o -o BloodPressureTracker 

@@ -1,0 +1,3 @@
+/mnt/c/git/BloodPressureTracker/build_output/CMakeFiles/BloodPressureTracker.dir
+/mnt/c/git/BloodPressureTracker/build_output/CMakeFiles/edit_cache.dir
+/mnt/c/git/BloodPressureTracker/build_output/CMakeFiles/rebuild_cache.dir

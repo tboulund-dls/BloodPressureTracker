@@ -1,0 +1,30 @@
+# Use the official .NET SDK image to build the Blazor app
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+
+# Set working directory
+WORKDIR /app
+
+# Copy the Blazor app source code
+COPY bms_app_web/ /app
+
+# Restore dependencies and build the application
+RUN dotnet restore
+RUN dotnet publish -c Release -o /app/out
+
+# Use the official .NET runtime image to run the Blazor app
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+
+# Set working directory
+WORKDIR /app
+
+# Copy the Blazor app from the build stage
+COPY --from=build /app/out .
+
+# Debug: List contents of /app to confirm BlazorApp.dll exists
+RUN ls -l /app
+
+# Expose the port Blazor app will run on
+EXPOSE 80
+
+# Start the Blazor app
+ENTRYPOINT ["dotnet", "BMS.dll"]
