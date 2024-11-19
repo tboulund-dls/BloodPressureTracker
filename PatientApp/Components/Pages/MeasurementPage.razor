@@ -1,0 +1,69 @@
+﻿@using Helpers.Entities
+@using MeasurementService.Repositories
+@using PatientService.Repositories
+
+<div class="MeasurementPage">
+    <h3>Enter Blood Pressure</h3>
+
+    <div>
+        <label for="patientSSN">Patient SSN:</label>
+        <input id="patientSSN" type="text" @bind="PatientSSN" placeholder="Enter Patient SSN" />
+    </div>
+
+    <div>
+        <label for="systolic">Systolic:</label>
+        <input id="systolic" type="number" @bind="Systolic" min="0" placeholder="Enter systolic" />
+    </div>
+
+    <div>
+        <label for="diastolic">Diastolic:</label>
+        <input id="diastolic" type="number" @bind="Diastolic" min="0" placeholder="Enter diastolic" />
+    </div>
+
+    <button class="btn btn-primary" @onclick="SubmitMeasurement">Submit</button>
+</div>
+
+@if (Message != null)
+{
+    <p>@Message</p>
+}
+
+@code {
+    public string PatientSSN { get; set; } // User identifier
+
+    public int Systolic { get; set; }
+    public int Diastolic { get; set; }
+    public string? Message { get; set; }
+
+    private async Task SubmitMeasurement()
+    {
+        // // Validating inputs
+        // if (Systolic <= 0 || Diastolic <= 0)
+        // {
+        //     Message = "Please enter valid blood pressure values.";
+        //     return;
+        // }
+
+        // try
+        // {
+        //     // Create a new measurement
+        //     var newMeasurement = new Measurement
+        //         {
+        //             Systolic = Systolic,
+        //             Diastolic = Diastolic,
+        //             PatientSSN = patient.SSN,
+        //             DateTime = DateTime.Now,
+        //             Seen = false
+        //         };
+
+        //     // Save the measurement via the repository
+        //     await MeasurementRepository.AddAsync(newMeasurement);
+
+        //     Message = "Measurement successfully saved.";
+        // }
+        // catch (Exception ex)
+        // {
+        //     Message = $"Error: {ex.Message}";
+        // }
+    }
+}
