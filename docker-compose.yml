@@ -5,3 +5,343 @@ services:
       - "8080:8080"
     volumes:
       - ./docs:/usr/local/structurizr
+
+  patient-service:
+    build: 
+      context: .
+      dockerfile: PatientService/Dockerfile
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=patient-db-master;Database=PatientDb;User=root;Password=password
+      - UNLEASH_URL=http://unleash:4242/api/
+      - UNLEASH_API_TOKEN=default:development.unleash-insecure-api-token
+    depends_on:
+      patient-db-master:
+        condition: service_healthy
+      unleash:
+        condition: service_healthy
+    networks:
+      - backend
+    deploy:
+      replicas: 3
+
+  measurement-service:
+    build: 
+      context: .
+      dockerfile: MeasurementService/Dockerfile
+    environment:
+      - "PatientService:BaseAddress=http://nginx/patients/"
+      - ConnectionStrings__DefaultConnection=Server=measurement-db-master;Database=MeasurementDb;User=root;Password=password
+      - UNLEASH_URL=http://unleash:4242/api/
+      - UNLEASH_API_TOKEN=default:development.unleash-insecure-api-token
+    depends_on:
+      measurement-db-master:
+       condition: service_healthy
+      unleash:
+        condition: service_healthy
+    networks:
+      - backend
+    deploy:
+      replicas: 3
+  
+  patient-db-master:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: PatientDb
+      MYSQL_REPLICATION_USER: repl_user
+      MYSQL_REPLICATION_PASSWORD: repl_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - patient-db-master-data:/var/lib/mysql
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    command: >
+      --server-id=1
+      --log-bin=mysql-bin
+      --binlog-format=ROW
+
+  patient-db-slave-1:
+    image: mysql:8.0
+    container_name: patient-db-slave-1
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: PatientDb
+      MYSQL_REPLICATION_USER: repl_user
+      MYSQL_REPLICATION_PASSWORD: repl_password
+      MYSQL_MASTER_HOST: patient-db-master
+      MYSQL_MASTER_USER: repl_user
+      MYSQL_MASTER_PASSWORD: repl_password
+      MYSQL_MASTER_PORT: 3306
+    networks:
+      - backend
+    depends_on:
+      patient-db-master:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    command: >
+      mysqld
+      --server-id=2
+      --log-bin=mysql-bin
+      --relay-log=mysql-relay-bin
+      --log-slave-updates
+      --read-only=1
+    volumes:
+      - patient-db-slave-1-data:/var/lib/mysql
+
+  patient-db-slave-2:
+    image: mysql:8.0
+    container_name: patient-db-slave-2
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: PatientDb
+      MYSQL_REPLICATION_USER: repl_user
+      MYSQL_REPLICATION_PASSWORD: repl_password
+      MYSQL_MASTER_HOST: patient-db-master
+      MYSQL_MASTER_USER: repl_user
+      MYSQL_MASTER_PASSWORD: repl_password
+      MYSQL_MASTER_PORT: 3306
+    networks:
+      - backend
+    depends_on:
+      patient-db-master:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    command: >
+      mysqld
+      --server-id=3
+      --log-bin=mysql-bin
+      --relay-log=mysql-relay-bin
+      --log-slave-updates
+      --read-only=1
+    volumes:
+      - patient-db-slave-2-data:/var/lib/mysql
+
+  patient-db-slave-3:
+    image: mysql:8.0
+    container_name: patient-db-slave-3
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: PatientDb
+      MYSQL_REPLICATION_USER: repl_user
+      MYSQL_REPLICATION_PASSWORD: repl_password
+      MYSQL_MASTER_HOST: patient-db-master
+      MYSQL_MASTER_USER: repl_user
+      MYSQL_MASTER_PASSWORD: repl_password
+      MYSQL_MASTER_PORT: 3306
+    networks:
+      - backend
+    depends_on:
+      patient-db-master:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    command: >
+      mysqld
+      --server-id=4
+      --log-bin=mysql-bin
+      --relay-log=mysql-relay-bin
+      --log-slave-updates
+      --read-only=1
+    volumes:
+      - patient-db-slave-3-data:/var/lib/mysql
+  
+  measurement-db-master:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: MeasurementDb
+      MYSQL_REPLICATION_USER: repl_user
+      MYSQL_REPLICATION_PASSWORD: repl_password
+    ports:
+      - "3307:3306"
+    volumes:
+      - measurement-db-master-data:/var/lib/mysql
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    command: >
+      --server-id=1
+      --log-bin=mysql-bin
+      --binlog-format=ROW
+
+  measurement-db-slave-1:
+    image: mysql:8.0
+    container_name: measurement-db-slave-1
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: MeasurementDb
+      MYSQL_REPLICATION_USER: repl_user
+      MYSQL_REPLICATION_PASSWORD: repl_password
+      MYSQL_MASTER_HOST: measurement-db-master
+      MYSQL_MASTER_USER: repl_user
+      MYSQL_MASTER_PASSWORD: repl_password
+      MYSQL_MASTER_PORT: 3306
+    networks:
+      - backend
+    depends_on:
+      measurement-db-master:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    command: >
+      mysqld
+      --server-id=2
+      --log-bin=mysql-bin
+      --relay-log=mysql-relay-bin
+      --log-slave-updates
+      --read-only=1
+    volumes:
+      - measurement-db-slave-1-data:/var/lib/mysql
+    
+  measurement-db-slave-2:
+    image: mysql:8.0
+    container_name: measurement-db-slave-2
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: MeasurementDb
+      MYSQL_REPLICATION_USER: repl_user
+      MYSQL_REPLICATION_PASSWORD: repl_password
+      MYSQL_MASTER_HOST: measurement-db-master
+      MYSQL_MASTER_USER: repl_user
+      MYSQL_MASTER_PASSWORD: repl_password
+      MYSQL_MASTER_PORT: 3306
+    networks:
+      - backend
+    depends_on:
+      measurement-db-master:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    command: >
+      mysqld
+      --server-id=3
+      --log-bin=mysql-bin
+      --relay-log=mysql-relay-bin
+      --log-slave-updates
+      --read-only=1
+    volumes:
+      - measurement-db-slave-2-data:/var/lib/mysql
+  
+  measurement-db-slave-3:
+    image: mysql:8.0
+    container_name: measurement-db-slave-3
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: MeasurementDb
+      MYSQL_REPLICATION_USER: repl_user
+      MYSQL_REPLICATION_PASSWORD: repl_password
+      MYSQL_MASTER_HOST: measurement-db-master
+      MYSQL_MASTER_USER: repl_user
+      MYSQL_MASTER_PASSWORD: repl_password
+      MYSQL_MASTER_PORT: 3306
+    networks:
+      - backend
+    depends_on:
+      measurement-db-master:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    command: >
+      mysqld
+      --server-id=4
+      --log-bin=mysql-bin
+      --relay-log=mysql-relay-bin
+      --log-slave-updates
+      --read-only=1
+    volumes:
+      - measurement-db-slave-3-data:/var/lib/mysql
+  
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    depends_on:
+      - patient-service
+      - measurement-service
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - backend
+
+  unleash:
+    build: .
+    ports:
+      - "4242:4242"
+    environment:
+      DATABASE_URL: "postgres://postgres:unleash@db/postgres"
+      DATABASE_SSL: "false"
+      INIT_CLIENT_API_TOKENS: "default:development.unleash-insecure-api-token"
+    depends_on:
+      - db
+    command: ["./wait-for", "db:5432", "--", "node", "index.js"]
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://localhost:4242/health || exit 1
+      interval: 1s
+      timeout: 1m
+      retries: 5
+      start_period: 15s
+    networks:
+      - backend
+
+  db:
+    expose:
+      - "5432"
+    image: postgres:14
+    environment:
+      POSTGRES_DB: "db"
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+    healthcheck:
+      test: ["CMD", "pg_isready", "--username=postgres", "--host=127.0.0.1", "--port=5432"]
+      interval: 2s
+      timeout: 1m
+      retries: 5
+      start_period: 10s
+    volumes:
+      - unleash-db-data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+volumes:
+  patient-db-master-data:
+  patient-db-slave-1-data:
+  patient-db-slave-2-data:
+  patient-db-slave-3-data:
+  measurement-db-master-data:
+  measurement-db-slave-1-data:
+  measurement-db-slave-2-data:
+  measurement-db-slave-3-data:
+  unleash-db-data:
+
+networks:
+  backend:
+    driver: bridge
