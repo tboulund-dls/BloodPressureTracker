@@ -1,0 +1,6 @@
+{
+    "plantuml.exportFormat": "png",
+    "plantuml.exportOutDir": "",
+    "plantuml.exportSubFolder": false,
+    "dotnet.defaultSolution": "Patient.sln"
+}
