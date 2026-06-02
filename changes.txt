@@ -1,0 +1,35 @@
+I first created a folder for storing the solution. 
+
+I then created an angular project which is saved in the BloodPressureTrackerApp folder which is my main solutino for the assignment. 
+
+I also created a api using expressjs and nodemon this is saved in the api folder.
+
+I created a folder named  QUERIES in BloodPressureTrackerApp were I saved the initial SQL query for the database.
+Since the focus of this assignment isnt database development the query is pretty simple.
+
+
+RUNNING APPLICATION GUIDE :
+OPEN TWO TERMINALS IN IDE(I used Visual studio code)
+Locate one at the API folder and the other at the BloodPressureTrackerApp folder.
+Then in the API terminal run this command nodemon api.js
+
+followed by the command ng serve this in the BloodPressureTrackerApp terminal.
+---------------------------------
+I also made 3 personas which is used in the database shown below.
+PERSONAS.
+1. 
+SSN: 1111111111 
+mail: test1@mail.dk
+name: Peter Jensen
+
+2. 
+SSN: 1212121212
+mail: test2@mail.dk
+name: Susanne Madsen
+
+3. 
+SSN: 1234561111
+mail: test3@mail.dk
+name: Asgar Østersø
+
+
